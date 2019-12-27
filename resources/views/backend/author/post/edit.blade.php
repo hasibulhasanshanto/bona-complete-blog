@@ -13,7 +13,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="block-header right m-r-10">
-            <a href="{{ route('admin.post.index')}}" class="btn btn-success waves-effecr">
+            <a href="{{ route('author.post.index')}}" class="btn btn-success waves-effecr">
                 <i class="material-icons">toc</i>
                 <span>All Post</span>
             </a>
@@ -22,7 +22,7 @@
             <li><a href="javascript:void(0);"><i class="material-icons">home</i> Home</a></li>
             <li class="active"><i class="material-icons">library_books</i> Edit Post</li>
         </ol>
-        <form action="{{ route('admin.post.update', $post->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('author.post.update', $post->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <!-- Create Tag Table -->

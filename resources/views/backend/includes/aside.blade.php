@@ -62,6 +62,12 @@
                             <span>Post</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('admin/pending/post') ? 'active' : '' }}">
+                        <a href="{{ route('admin.post.pending')}}">
+                            <i class=" material-icons">grid_off</i>
+                            <span>Pending Post</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="#" class="menu-toggle">
                             <i class="material-icons">tv</i>
@@ -90,23 +96,12 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">view_list</i>
-                            <span>Tables</span>
+                    <li class="{{ Request::is('author/post*') ? 'active' : '' }}">
+                        <a href="{{ route('author.post.index')}}">
+                            <i class=" material-icons">art_track</i>
+                            <span>Post</span>
                         </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/tables/normal-tables.html">Normal Tables</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/jquery-datatable.html">Jquery Datatables</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/editable-table.html">Editable Tables</a>
-                            </li>
-                        </ul>
-                    </li>             
+                    </li>            
                 @endif
                 {{-- End Author Dashboard Operation --}}
 

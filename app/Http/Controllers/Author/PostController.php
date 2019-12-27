@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Post;
+use App\Category;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Brian2694\Toastr\Facades\Toastr;
@@ -10,9 +13,6 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Auth;
-use App\Post;
-use App\Category;
-use App\Tag;
 
 class PostController extends Controller
 {
@@ -23,8 +23,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('backend.admin.post.index', compact('posts') );
+        $posts = Auth::User()->posts()->latest()->get();
+        return view('backend.author.post.index', compact('posts') );
     }
 
     /**
@@ -36,7 +36,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('backend.admin.post.create', compact('categories', 'tags'));
+        return view('backend.author.post.create', compact('categories', 'tags'));
     }
 
     /**
@@ -94,7 +94,7 @@ class PostController extends Controller
         else{
             $posts->status = false;
         }
-        $posts->is_approved = true;
+        $posts->is_approved = false;
 
         $posts->save();
 
@@ -105,11 +105,11 @@ class PostController extends Controller
 
         if( $posts){
             Toastr::success('Post Created Sucessfully!!', 'Success');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
 
         }else{
             Toastr::error('Something Went Wrong :(', 'Error');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
         } 
     }
 
@@ -121,7 +121,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('backend.admin.post.show', compact('post'));
+        return view('backend.author.post.show', compact('post'));
     }
 
     /**
@@ -134,7 +134,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        return view('backend.admin.post.edit', compact('post','categories', 'tags'));
+        return view('backend.author.post.edit', compact('post','categories', 'tags'));
     }
 
     /**
@@ -197,7 +197,7 @@ class PostController extends Controller
         else{
             $post->status = false;
         }
-        $post->is_approved = true;
+        $post->is_approved = false;
 
         $post->save();
 
@@ -208,11 +208,11 @@ class PostController extends Controller
 
         if( $post){
             Toastr::success('Post Updated Sucessfully!!', 'Success');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
 
         }else{
             Toastr::error('Something Went Wrong :(', 'Error');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
         } 
     }
 
@@ -235,36 +235,11 @@ class PostController extends Controller
 
         if( $post){
             Toastr::success('Post Deleted Sucessfully!', 'Success');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
 
         }else{
             Toastr::error('Something Went Wrong :(', 'Error');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('author.post.index');
         } 
-    }
-
-    public function pending(){
-        $posts = Post::where('is_approved', false)->get();
-        return view('backend.admin.post.pending', compact('posts') );
-    }
-
-    public function approval($id){
-
-        $post = Post::find($id);
-
-        if($post->is_approved == false){
-            $post->is_approved = true;
-            $post->save(); 
-        }
-
-        if( $post){
-            Toastr::success('Post Approved Sucessfully!', 'Success');
-            return redirect()->route('admin.post.index');
-
-        }else{
-            Toastr::error('Something Went Wrong :(', 'Error');
-            return redirect()->route('admin.post.index');
-        } 
-
     }
 }
