@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Auth::User()->posts()->latest()->get();
+        $posts = Auth::User()->posts()->with('user')->latest()->get();
         return view('backend.author.post.index', compact('posts') );
     }
 
@@ -121,6 +121,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if ( $post->user_id != Auth::id() ) {
+
+            Toastr::error('You are not authorized to access this post', 'Error');
+            return redirect()->back();
+        }
+        
         return view('backend.author.post.show', compact('post'));
     }
 
@@ -132,6 +138,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if ( $post->user_id != Auth::id() ) {
+
+            Toastr::error('You are not authorized to access this post', 'Error');
+            return redirect()->back();
+        }
+
         $categories = Category::all();
         $tags = Tag::all();
         return view('backend.author.post.edit', compact('post','categories', 'tags'));
@@ -146,6 +158,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if ( $post->user_id != Auth::id() ) {
+
+            Toastr::error('You are not authorized to access this post', 'Error');
+            return redirect()->back();
+        }
+
         $request->validate([
 
             'title' => 'required', 
@@ -224,6 +242,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ( $post->user_id != Auth::id() ) {
+
+            Toastr::error('You are not authorized to access this post', 'Error');
+            return redirect()->back();
+        }
+        
         if(Storage::disk('public')->exists('posts/'.$post->image)){
 
             Storage::disk('public')->delete('posts/'.$post->image);
