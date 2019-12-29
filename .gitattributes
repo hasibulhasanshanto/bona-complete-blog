@@ -3,5 +3,4 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 *.rb linguist-language=php
-*.glyphs linguist-language=OpenStep-Property-List
 CHANGELOG.md export-ignore
