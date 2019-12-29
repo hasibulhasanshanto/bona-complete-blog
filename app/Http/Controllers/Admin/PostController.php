@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use Carbon\Carbon;
-use Auth;
+use App\Tag;
 use App\Post;
 use App\Category;
-use App\Tag;
+use Carbon\Carbon;
+use App\Subscriber;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Notifications\AuthorPostApproved;
+use App\Notifications\NewPostNotify;
+use Illuminate\Support\Facades\Notification;
 
 class PostController extends Controller
 {
@@ -101,7 +105,12 @@ class PostController extends Controller
         $posts->categories()->attach($request->categories);
         $posts->tags()->attach($request->tags);
         
-        
+        $subscribers = Subscriber::all();
+
+        foreach ($subscribers as  $subscriber) {
+           Notification::route('mail', $subscriber->email)
+           ->notify( new NewPostNotify($posts));
+        }
 
         if( $posts){
             Toastr::success('Post Created Sucessfully!!', 'Success');
@@ -255,6 +264,16 @@ class PostController extends Controller
         if($post->is_approved == false){
             $post->is_approved = true;
             $post->save(); 
+
+            $post->user->notify(new AuthorPostApproved($post));
+
+            $subscribers = Subscriber::all();
+
+            foreach ($subscribers as  $subscriber) {
+
+                Notification::route('mail', $subscriber->email)
+                ->notify(new NewPostNotify($post));
+            }
         }
 
         if( $post){

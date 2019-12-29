@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Author;
 
-use App\Http\Controllers\Controller;
-use App\Post;
-use App\Category;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use App\Post;
+use App\User;
+use App\Category;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Notifications\NewAuthorPost;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -101,7 +104,8 @@ class PostController extends Controller
         $posts->categories()->attach($request->categories);
         $posts->tags()->attach($request->tags);
         
-        
+        $users = User::where('role_id', '1')->get();
+        Notification::send($users, new NewAuthorPost($posts));
 
         if( $posts){
             Toastr::success('Post Created Sucessfully!!', 'Success');
