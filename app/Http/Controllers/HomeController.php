@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,13 @@ class HomeController extends Controller
     public function index()
     {
         //I have changed the route to a user directory
-        return view('backend.user.home');
+        return view('backend.user.home'); 
+    }
+
+    public function fav()
+    {
+
+        $posts = Auth::user()->favorite_posts;
+        return view('backend.user.favorite', compact('posts'));
     }
 }

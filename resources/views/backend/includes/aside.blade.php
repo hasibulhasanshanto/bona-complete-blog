@@ -4,7 +4,7 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="{{ asset('/backend/images/user.png') }}" width="48" height="48" alt="User" />
+                <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" width="50" height="50" alt="User" />
             </div>
             <div class="info-container">
             <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
@@ -13,7 +13,15 @@
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li> 
+                        <li>
+                            @if ( Auth::user()->role_id == 1 )
+                            <a href="{{ route('admin.settings')}}"><i class="material-icons">person</i>Profile</a>
+                            @elseif(Auth::user()->role_id == 2)
+                                <a href="{{ route('author.settings')}}"><i class="material-icons">person</i>Profile</a>
+                            @else
+                                <a href="#"><i class="material-icons">person</i>Profile</a>
+                            @endif
+                        </li> 
                         <li role="separator" class="divider"></li> 
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
@@ -47,19 +55,19 @@
                     <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
                         <a href="{{ route('admin.tag.index')}}">
                             <i class="material-icons">label</i>
-                            <span>Tags</span>
+                            <span>All Tags</span>
                         </a> 
                     </li> 
                     <li class="{{ Request::is('admin/category*') ? 'active' : '' }}">
                         <a href="{{ route('admin.category.index')}}">
                             <i class=" material-icons">shop_two</i>
-                            <span>Category</span>
+                            <span>All Category</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/post*') ? 'active' : '' }}">
                         <a href="{{ route('admin.post.index')}}">
                             <i class=" material-icons">art_track</i>
-                            <span>Post</span>
+                            <span>All Post</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('admin/pending/post') ? 'active' : '' }}">
@@ -68,29 +76,33 @@
                             <span>Pending Post</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('admin/favorite') ? 'active' : '' }}">
+                        <a href="{{ route('admin.favorite.index')}}">
+                            <i class=" material-icons">favorite</i>
+                            <span>Favorite Post</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ Request::is('admin/comments') ? 'active' : '' }}">
+                        <a href="{{ route('admin.comment.index')}}">
+                            <i class=" material-icons">comment</i>
+                            <span>Comments</span>
+                        </a>
+                    </li>
+
                     <li class="{{ Request::is('admin/subscriber') ? 'active' : '' }}">
                         <a href="{{ route('admin.subscriber.index')}}">
                             <i class=" material-icons">subscriptions</i>
                             <span>Subscribers</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="#" class="menu-toggle">
-                            <i class="material-icons">tv</i>
-                            <span>Monitoring</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="pages/tables/normal-tables.html">Normal Tables</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/jquery-datatable.html">Jquery Datatables</a>
-                            </li>
-                            <li>
-                                <a href="pages/tables/editable-table.html">Editable Tables</a>
-                            </li>
-                        </ul>
                     </li> 
+                    <li class="header">SYSTEM</li> 
+                    <li class="{{ Request::is('admin/settings*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.settings')}}">
+                            <i class=" material-icons">settings</i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
                 @endif
                 {{-- End Admin Dashboard Operation --}}
 
@@ -102,21 +114,64 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+
                     <li class="{{ Request::is('author/post*') ? 'active' : '' }}">
                         <a href="{{ route('author.post.index')}}">
                             <i class=" material-icons">art_track</i>
                             <span>Post</span>
                         </a>
-                    </li>            
+                    </li> 
+
+                    <li class="{{ Request::is('author/comments') ? 'active' : '' }}">
+                        <a href="{{ route('author.comment.index')}}">
+                            <i class=" material-icons">comment</i>
+                            <span>Comments</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ Request::is('author/favorite') ? 'active' : '' }}">
+                        <a href="{{ route('author.favorite.index')}}">
+                            <i class=" material-icons">favorite</i>
+                            <span>Favorite Post</span>
+                        </a>
+                    </li>
+
+                    <li class="header">SYSTEM</li> 
+                    <li class="{{ Request::is('author/settings*') ? 'active' : '' }}">
+                        <a href="{{ route('author.settings')}}">
+                            <i class=" material-icons">settings</i>
+                            <span>Settings</span>
+                        </a>
+                    </li>          
                 @endif
                 {{-- End Author Dashboard Operation --}}
 
                 {{-- User Dashboard Operation --}}
-                @if (Request::is('user*'))
-                
+                @if (Request::is('home*'))
+                    <li class="{{ Request::is('home') ? 'active' : '' }}">
+                        <a href="{{ route('home')}}">
+                            <i class="material-icons">dashboard</i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ Request::is('home/settings') ? 'active' : '' }}">
+                        <a href="{{ route('user.settings')}}">
+                            <i class=" material-icons">settings</i>
+                            <span>Profile Settings</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('home/favorite') ? 'active' : '' }}">
+                        <a href="{{ route('user.favorite')}}">
+                            <i class=" material-icons">favorite</i>
+                            <span>Favorite Post</span>
+                        </a>
+                    </li>
+                    <li class="header">SYSTEM</li>
                 @endif
                 {{-- End User Dashboard Operation --}}
-                <li class="header">SYSTEM</li>
+                
+                
                 <li>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                         class="material-icons">input</i>

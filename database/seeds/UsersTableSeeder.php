@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-       DB::table('users')->insert([
+        DB::table('users')->insert([
            'role_id' => '1',
            'name' => 'Mr. Admin',
            'username' => 'admin',
@@ -22,13 +22,22 @@ class UsersTableSeeder extends Seeder
            
         ]);
 
-            DB::table('users')->insert([
+        DB::table('users')->insert([
            'role_id' => '2',
            'name' => 'Mr. Author',
            'username' => 'author',
            'email' => 'author@author.com',
            'password' => bcrypt('12345678'), 
            
+        ]);
+
+        DB::table('users')->insert([
+            'role_id' => '3',
+            'name' => 'Mr. User',
+            'username' => 'user',
+            'email' => 'user@user.com',
+            'password' => bcrypt('12345678'),
+
         ]);
     }
 }

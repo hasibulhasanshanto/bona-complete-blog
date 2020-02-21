@@ -6,9 +6,10 @@
             <div class="col-lg-4 col-md-6">
                 <div class="footer-section">
 
-                    <a class="logo" href="#"><img src="frontend/images/logo.png" alt="Logo Image"></a>
-                    <p class="copyright">Bona @ 2017. All rights reserved.</p>
+                    <a class="logo" href="#"><img src="{{ asset('frontend/images/logo.png') }}" alt="Logo Image"></a>
+                    <p class="copyright">Bona @ {{ now()->year }}. All rights reserved.</p>
                     <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                    <p class="copyright">Developed by <a href="https://github.com/hasibulhasanshanto" target="_blank">Hasibul Hasan Shanto</a></p>
                     <ul class="icons">
                         <li><a href="#"><i class="ion-social-facebook-outline"></i></a></li>
                         <li><a href="#"><i class="ion-social-twitter-outline"></i></a></li>
@@ -24,15 +25,15 @@
                 <div class="footer-section">
                     <h4 class="title"><b>CATAGORIES</b></h4>
                     <ul>
-                        <li><a href="#">BEAUTY</a></li>
-                        <li><a href="#">HEALTH</a></li>
-                        <li><a href="#">MUSIC</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">SPORT</a></li>
-                        <li><a href="#">DESIGN</a></li>
-                        <li><a href="#">TRAVEL</a></li>
-                    </ul>
+                        @foreach ($categories as $index=> $category)
+                            <li><a href="{{ route('category.post',$category->slug )}}">{{ $category->name }}</a></li>
+                            {{-- @if ($index == 2 || $index == 5 ||$index == 8 ) --}}
+                            @if (($index+1) % 3 == 0 )
+                                <br>
+                            @endif
+                        @endforeach
+                    </ul> 
+                    
                 </div><!-- footer-section -->
             </div><!-- col-lg-4 col-md-6 -->
 
