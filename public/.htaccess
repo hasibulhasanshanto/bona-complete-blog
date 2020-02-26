@@ -9,11 +9,10 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteEngine on
+    # Redirect Trailing Slashes If Not A Folder... 
+    RewriteCond %{HTTP_HOST} https://salty-plateau-30661.herokuapp.com/ [NC]
+    RewriteRule ^(.*)$ https://salty-plateau-30661.herokuapp.com//$1 [R,L]
 
-    RewriteCond %{HTTPS}::%{HTTP_HOST} ^off::(?:www\.)?(.+)$
-    RewriteRule ^ https://www.%1%{REQUEST_URI} [NE,L,R]
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
