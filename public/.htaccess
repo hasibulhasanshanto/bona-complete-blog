@@ -11,7 +11,7 @@
 
     # Redirect Trailing Slashes If Not A Folder... 
     RewriteCond %{HTTP_HOST} salty-plateau-30661.herokuapp.com [NC]
-    RewriteRule ^(.*)$ https://salty-plateau-30661.herokuapp.com//$1 [R,L]
+    RewriteRule ^(.*)$ https://salty-plateau-30661.herokuapp.com/$1 [R,L]
 
 
     # Handle Front Controller...
