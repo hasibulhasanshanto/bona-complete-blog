@@ -10,7 +10,7 @@
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
     # Redirect Trailing Slashes If Not A Folder... 
-    RewriteCond %{HTTP_HOST} https://salty-plateau-30661.herokuapp.com/ [NC]
+    RewriteCond %{HTTP_HOST} salty-plateau-30661.herokuapp.com [NC]
     RewriteRule ^(.*)$ https://salty-plateau-30661.herokuapp.com//$1 [R,L]
 
 
