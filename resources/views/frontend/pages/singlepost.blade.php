@@ -1,8 +1,8 @@
 @extends('frontend.master')
 
 @push('css')
-<link href="{{ secure_asset('/frontend/css/single-post/styles.css')}}" rel="stylesheet">
-<link href="{{ secure_asset('/frontend/css/single-post/responsive.css')}}" rel="stylesheet">
+<link href="{{ asset('/frontend/css/single-post/styles.css')}}" rel="stylesheet">
+<link href="{{ asset('/frontend/css/single-post/responsive.css')}}" rel="stylesheet">
 
 <style>
     .favorite_posts {

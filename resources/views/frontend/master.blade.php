@@ -14,9 +14,9 @@
 <!-- Toastr Css -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Stylesheets -->        
-    <link href="{{ secure_asset('/frontend/css/bootstrap.css') }}" rel="stylesheet">        
-    <link href="{{ secure_asset('/frontend/css/swiper.css') }}" rel="stylesheet">        
-    <link href="{{ secure_asset('/frontend/css/ionicons.css') }}" rel="stylesheet">
+    <link href="{{ asset('/frontend/css/bootstrap.css') }}" rel="stylesheet">        
+    <link href="{{ asset('/frontend/css/swiper.css') }}" rel="stylesheet">        
+    <link href="{{ asset('/frontend/css/ionicons.css') }}" rel="stylesheet">
         
     @stack('css')
 
@@ -33,15 +33,15 @@
    
     @include('frontend.includes.footer')
 
-<script src="{{ secure_asset('/frontend/js/jquery-3.1.1.min.js')}}"></script>
+<script src="{{ asset('/frontend/js/jquery-3.1.1.min.js')}}"></script>
         
-<script src="{{ secure_asset('/frontend/js/tether.min.js')}}"></script>
+<script src="{{ asset('/frontend/js/tether.min.js')}}"></script>
         
-<script src="{{ secure_asset('/frontend/js/bootstrap.js')}}"></script>
+<script src="{{ asset('/frontend/js/bootstrap.js')}}"></script>
         
-<script src="{{ secure_asset('/frontend/js/swiper.js')}}"></script>
+<script src="{{ asset('/frontend/js/swiper.js')}}"></script>
         
-<script src="{{ secure_asset('/frontend/js/scripts.js')}}"></script>
+<script src="{{ asset('/frontend/js/scripts.js')}}"></script>
 <!-- Toastr Js -->
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
