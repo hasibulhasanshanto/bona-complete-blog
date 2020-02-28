@@ -27,7 +27,7 @@
                     <ul>
                         @foreach ($categories as $index=> $category)
                             <li><a href="{{ route('category.post',$category->slug )}}">{{ $category->name }}</a></li>
-                            {{-- @if ($index == 2 || $index == 5 ||$index == 8 ) --}}
+                            
                             @if (($index+1) % 3 == 0 )
                                 <br>
                             @endif
