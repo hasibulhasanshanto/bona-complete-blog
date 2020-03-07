@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
@@ -82,8 +83,8 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
+            'username' => Str::slug($data['username']), 
+            'email' => Str::lower($data['email']),
             'password' => Hash::make($data['password']),
         ]); 
         

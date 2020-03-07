@@ -51,13 +51,15 @@
                             <i class="material-icons">dashboard</i>
                             <span>Dashboard</span>
                         </a>
-                    </li> 
+                    </li>
+
                     <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
                         <a href="{{ route('admin.tag.index')}}">
                             <i class="material-icons">label</i>
                             <span>All Tags</span>
                         </a> 
                     </li> 
+                    
                     <li class="{{ Request::is('admin/category*') ? 'active' : '' }}">
                         <a href="{{ route('admin.category.index')}}">
                             <i class=" material-icons">shop_two</i>
@@ -96,6 +98,18 @@
                             <span>Subscribers</span>
                         </a>
                     </li> 
+                    <li class="{{ Request::is('admin/authors*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.author.index')}}">
+                            <i class="material-icons">message</i>
+                            <span>Author's Post</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::is('admin/allauthors*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.allauthors.index')}}">
+                            <i class="material-icons">face</i>
+                            <span>All Authors</span>
+                        </a>
+                    </li>
                     <li class="header">SYSTEM</li> 
                     <li class="{{ Request::is('admin/settings*') ? 'active' : '' }}">
                         <a href="{{ route('admin.settings')}}">

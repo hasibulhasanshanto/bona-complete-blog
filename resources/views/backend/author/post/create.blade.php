@@ -6,7 +6,14 @@
 
 @push('css')  
 <!-- Bootstrap Select Css -->
+    
     <link href="{{ asset('/backend/css/bootstrap-select.min.css')}}" rel="stylesheet" />
+    <style>
+        element.style {
+            overflow: none !important;
+        }
+    </style>
+    
 @endpush
 
 @section('content')
@@ -67,9 +74,9 @@
                             <div class="form-group form-float">
                                 <label class="form-label">Select Categories</label>
                                 <div class="form-line {{ $errors->has('categories') ? 'focused error' : '' }}"> 
-                                    <select name="categories[]" id="category" class="form-control show-tick" data-live-search="true" multiple>
+                                    <select name="categories[]" id="category" class="form-control show-tick" data-live-search="true" style="overflow: none !important;" multiple>
                                         @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             
                                         @endforeach
                                     </select>
@@ -102,7 +109,7 @@
                             </h2>
                         </div>  
                             <div class="body">
-                                <textarea id="mytextarea" name="body" rows="20">Hello, World!</textarea> 
+                                <textarea id="mytextarea" name="body" rows="20"></textarea> 
                             </div> 
                     </div>
                 </div>

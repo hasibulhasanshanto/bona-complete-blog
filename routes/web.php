@@ -6,8 +6,11 @@ Route::get('/single-post/{slug}/', 'FrontController@SinglePost')->name('front.si
 Route::get('/all-posts', 'FrontController@AllPost')->name('front.all.post');
 Route::get('/category/{slug}', 'FrontController@postByCategory')->name('category.post');
 Route::get('/tag/{slug}', 'FrontController@postByTag')->name('tag.post');
-Route::post('subscriber', 'SubscriberController@store')->name('subscriber.store');
 
+Route::get('/author-posts/{username}', 'FrontController@authorProfile')->name('author.profile');
+Route::post('subscriber', 'SubscriberController@store')->name('subscriber.store');
+//Search Route
+Route::get('/search', 'searchController@search')->name('search');
 
 //Authentication Routes
 Auth::routes();
@@ -36,6 +39,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin','namespace'=>'Admin','middleware'
     Route::resource('tag','TagController');
     Route::resource('category','CategoryController');
     Route::resource('post','PostController');
+    Route::resource('/allauthors', 'AllAuthors');
 
     Route::get('pending/post', 'PostController@pending')->name('post.pending');
     Route::put('post/{id}/approve', 'PostController@approval')->name('post.approve');
@@ -47,6 +51,9 @@ Route::group(['as'=>'admin.','prefix'=>'admin','namespace'=>'Admin','middleware'
     Route::delete('/subscriber/{subscriber}', 'SubscriberController@destroy')->name('subscriber.destroy');
 
     Route::get('/favorite', 'FavoriteController@index')->name('favorite.index');
+
+    Route::get('/authors', 'AuthorController@index')->name('author.index');
+    Route::delete('/authors/{id}', 'AuthorController@destroy')->name('author.destroy');
 });
 
 //Author Routes

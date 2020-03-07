@@ -39,11 +39,11 @@
                         <div class="post-info">
 
                             <div class="left-area">
-                            <a class="avatar" href="#"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}" alt="Profile Image"></a>
+                            <a class="avatar" href="{{ route('author.profile',$post->user->username )}}"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}" alt="Profile Image"></a>
                             </div>
 
                             <div class="middle-area">
-                                <a class="name" href="#"><b>{{ $post->user->name }}</b></a>
+                                <a class="name" href="{{ route('author.profile',$post->user->username )}}"><b>{{ $post->user->name }}</b></a>
                                 <h6 class="date">on {{ $post->created_at->diffForHumans() }}</h6>
                             </div>
 
@@ -143,7 +143,7 @@
                             <div class="blog-image"><img src="{{ Storage::disk('public')->url('posts/'.$randompost->image ) }}"
                                     alt="{{ $randompost->title}}"></div>
                 
-                            <a class="avatar" href="#"><img src="{{ Storage::disk('public')->url('profile/'.$randompost->user->image) }}"
+                            <a class="avatar" href="{{ route('author.profile',$post->user->username )}}"><img src="{{ Storage::disk('public')->url('profile/'.$randompost->user->image) }}"
                                     alt="{{ $randompost->user->name }} image"></a>
                 
                             <div class="blog-info">

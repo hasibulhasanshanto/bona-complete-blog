@@ -1,7 +1,7 @@
 @extends('backend.master')
 
 @section('title')
-All Post
+    Pending Post
 @endsection
 
 @push('css')
@@ -11,13 +11,7 @@ All Post
 
 @section('content')
 <section class="content">
-    <div class="container-fluid">
-        <div class="block-header right m-r-10">
-            <a href="{{ route('admin.post.index')}}" class="btn btn-success waves-effecr">
-                <i class="material-icons">toc</i>
-                <span>All Post</span>
-            </a>
-        </div>
+    <div class="container-fluid"> 
         <ol class="breadcrumb breadcrumb-bg-blue">
             <li><a href="javascript:void(0);"><i class="material-icons">home</i> Home</a></li>
             <li class="active"><i class="material-icons">library_books</i> Pending Post</li>

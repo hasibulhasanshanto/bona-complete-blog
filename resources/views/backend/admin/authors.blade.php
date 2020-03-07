@@ -1,7 +1,7 @@
 @extends('backend.master')
 
 @section('title')
-    Subscribers
+    Authors Post Deatils
 @endsection
 
 @push('css') 
@@ -14,7 +14,7 @@
     <div class="container-fluid"> 
         <ol class="breadcrumb breadcrumb-bg-blue">
             <li><a href="javascript:void(0);"><i class="material-icons">home</i> Home</a></li>
-            <li class="active"><i class="material-icons">library_books</i> Subscribers</li>
+            <li class="active"><i class="material-icons">library_books</i> Authors Post Deatils</li>
         </ol>
         <!-- Exportable Table -->
         <div class="row clearfix">
@@ -22,8 +22,8 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            ALL SUBSCRIBER 
-                            <span class="badge bg-pink">{{ $subscribers->count() }}</span>
+                            Authors Post Deatils 
+                            <span class="badge bg-pink">{{ $authors->count() }}</span>
                         </h2> 
                     </div>
                     <div class="body">
@@ -32,7 +32,10 @@
                                 <thead class="center-align">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Email</th> 
+                                        <th>Name</th> 
+                                        <th>Posts</th> 
+                                        <th>Comments</th>
+                                        <th>Favourite Posts</th> 
                                         <th>Created At</th> 
                                         <th class="align-center">Action</th> 
                                     </tr>
@@ -40,25 +43,35 @@
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Email</th> 
+                                        <th>Name</th>
+                                        <th>Posts</th>
+                                        <th>Comments</th>
+                                        <th>Favourite Posts</th>
                                         <th>Created At</th>
                                         <th class="align-center">Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     @php( $i =1)
-                                    @foreach ($subscribers as $subscriber)
+                                    @foreach ($authors as $author)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $subscriber->email }}</td> 
-                                        <td>{{ $subscriber->created_at }}</td>
+                                        <td>{{ $author->name }}</td>
+                                        <td>{{ $author->posts_count }}</td> 
+                                        <td>{{ $author->comments_count }}</td>
+                                        <td>{{ $author->favorite_posts_count }}</td>
+                                        <td>{{ $author->created_at->toDateString() }}</td>
                                         <td class="text-center"> 
+                                            {{-- <a href="{{ route('admin.category.edit', $author->id )}}" class="btn btn-primary waves-effect">
+                                                <i class="material-icons">edit</i>
+                                            </a> --}}
+
                                             <button class="btn btn-danger waves-effect" id="delete" type="button"
-                                            onclick="deletesubScriber({{ $subscriber->id }})">
+                                            onclick="deleteAuthor({{ $author->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
 
-                                            <form id="delete-form-{{ $subscriber->id }}" method="POST" action="{{ route('admin.subscriber.destroy', $subscriber->id )}}" style="display:none">
+                                            <form id="delete-form-{{ $author->id }}" method="POST" action="{{ route('admin.author.destroy', $author->id )}}" style="display:none">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>                                            
@@ -92,7 +105,7 @@
     <script src="{{ asset('/backend/js/datatable/jquery-datatable.js') }}"></script>
     <!-- Sweet Alert2 Js -->
     <script type="text/javascript">
-        function deletesubScriber(id) {
+        function deleteAuthor(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -113,7 +126,7 @@
                 if (result.value) {
                     swalWithBootstrapButtons.fire(
                         'Deleted!',
-                        'Your file has been deleted.',
+                        'Author has been deleted.',
                         'success'
                     )
                     event.preventDefault();

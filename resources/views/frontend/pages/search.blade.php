@@ -11,7 +11,8 @@
         height: 400px;
         widows: 100%;
         background-size: cover;
-        background-image: url({{ Storage::disk('public')->url('posts/cover2.jpg') }});
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url({{ Storage::disk('public')->url('posts/cover1.jpeg') }});
         
     }
 
@@ -21,17 +22,19 @@
 @section('hero')
 
 @section('main-body')
+    <div class="overlay"></div>
     <div class="header-bg">
         <div class="slider display-table center-text">
-        <h1 class="title display-table-cell">All Posts</h1>
+            <h1 class="title display-table-cell">{{ $posts->count() }} Results for : {{ $query }}</h1>
         </div>
-    </div><!-- slider -->
+    </div>
     
     <section class="blog-area section">
         <div class="container">
     
             <div class="row">    
-                @foreach ($posts as $post)
+                @if ($posts->count() > 0)
+                    @foreach ($posts as $post)
                     <div class="col-lg-4 col-md-6">
                         <div class="card h-100">
                             <div class="single-post post-style-1">
@@ -39,7 +42,7 @@
                                 <div class="blog-image"><img src="{{ Storage::disk('public')->url('posts/'.$post->image ) }}"
                                         alt="{{ $post->title}}"></div>
                     
-                                <a class="avatar" href="{{ route('author.profile',$post->user->username )}}"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}"
+                                <a class="avatar" href="#"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}"
                                         alt="{{ $post->user->name }} image"></a>
                     
                                 <div class="blog-info">
@@ -51,14 +54,15 @@
                                         <li>
                                             @guest
                                             <a href="javascript:void(0);" onclick="toastr.info('To favorite you have to login first', 'info', {
-                                                                        closeButton: true,
-                                                                        progressBar: true,
-                                                                    })"><i class="ion-heart"></i>{{ $post->favorite_to_user->count() }}</a>
+                                                                                            closeButton: true,
+                                                                                            progressBar: true,
+                                                                                        })"><i
+                                                    class="ion-heart"></i>{{ $post->favorite_to_user->count() }}</a>
                                             @else
                                             <a href="javascript:void(0);"
                                                 onclick="document.getElementById('favorite-form-{{ $post->id }}').submit();"
                                                 class="
-                                                                        {{ !Auth::user()->favorite_posts->where('pivot.post_id', $post->id)->count() == 0 ? 'favorite_posts' : '' }}">
+                                                                                            {{ !Auth::user()->favorite_posts->where('pivot.post_id', $post->id)->count() == 0 ? 'favorite_posts' : '' }}">
                                                 <i class="ion-heart"></i>{{ $post->favorite_to_user->count() }}</a>
                     
                                             <form id="favorite-form-{{ $post->id }}" action="{{ route('post.favorite',$post->id ) }}"
@@ -76,10 +80,23 @@
                             </div><!-- single-post -->
                         </div><!-- card -->
                     </div><!-- col-lg-4 col-md-6 -->
-                @endforeach 
+                    @endforeach
+                @else
+                    <div class="col-lg-10 col-md-10 offset-1">
+                        <div class="card h-100">
+                            <div class="single-post post-style-1"> 
+                    
+                                <div class="blog-info pt-5">                    
+                                    <h4 class="title"><strong>Sorry, No posts found by your search data :(</strong></a>
+                                    </h4> 
+                                </div><!-- blog-info -->
+                            </div><!-- single-post -->
+                        </div><!-- card -->
+                    </div><!-- col-lg-4 col-md-6 -->
+                @endif
             </div><!-- row -->
     
-            {{ $posts->links() }}
+            {{-- {{ $posts->links() }} --}}
     
         </div><!-- container -->
     </section><!-- section -->

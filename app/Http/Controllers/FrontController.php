@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use App\Post;
+use App\User;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -13,7 +14,7 @@ class FrontController extends Controller
     public function Home(){
 
         $categories = Category::all();
-        $posts = Post::with(['user', 'favorite_to_user'])->latest()->approved()->publish()->take(6)->get();
+        $posts = Post::with(['user', 'favorite_to_user'])->latest()->approved()->publish()->take(9)->get();
         return view('frontend.pages.home', compact('categories', 'posts'));
     }
 
@@ -34,7 +35,7 @@ class FrontController extends Controller
     }
 
     public function AllPost(){
-        $posts = Post::with(['user', 'favorite_to_user'])->latest()->approved()->publish()->paginate(12); 
+        $posts = Post::with(['user', 'favorite_to_user'])->latest()->approved()->publish()->paginate(15); 
         return view('frontend.pages.posts', compact('posts'));
     }
 
@@ -50,5 +51,11 @@ class FrontController extends Controller
         $tag = Tag::where('slug', $slug)->first();
         $posts = $tag->posts()->approved()->publish()->get(); 
         return view('frontend.pages.tag_posts', compact('tag', 'posts'));
+    }
+
+    public function authorProfile($username){
+        $author = User::where('username', $username) ->first();
+        $posts = $author->posts()-> publish()->approved()->get();
+        return view('frontend.pages.author', compact('author', 'posts'));
     }
 }

@@ -60,7 +60,7 @@
                                     <img src="{{ Storage::disk('public')->url('posts/'.$post->image ) }}" alt="{{ $post->title}}">
                                 </div>
                     
-                                <a class="avatar" href="#">
+                                <a class="avatar" href="{{ route('author.profile',$post->user->username )}}">
                                     <img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}"
                                     alt="{{ $post->user->name }} image">
                                 </a>

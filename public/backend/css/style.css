@@ -4095,7 +4095,8 @@ section.content {
       -ms-box-shadow: none !important;
       box-shadow: none !important;
       border: none;
-      margin-left: 30px; }
+      /* margin-left: 30px;  */
+    }
   .bootstrap-select .bs-searchbox {
     position: relative; }
     .bootstrap-select .bs-searchbox:after {
@@ -8211,3 +8212,6 @@ html.ie11 .dropdown-menu ul.menu li a {
 
 html.ie11 .bs-searchbox .form-control {
   width: 90%; }
+
+
+  

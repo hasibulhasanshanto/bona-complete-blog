@@ -102,7 +102,7 @@
                             </h2>
                         </div>  
                             <div class="body">
-                                <textarea id="mytextarea" name="body" rows="20">Hello, World!</textarea> 
+                                <textarea id="mytextarea" name="body" rows="20"></textarea> 
                             </div> 
                     </div>
                 </div>
