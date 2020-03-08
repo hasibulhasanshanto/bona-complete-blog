@@ -92,8 +92,12 @@
                                                 <label for="image">Profile Image:</label>
                                             </div>
                                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                                <div class="form-group">
-                                                    <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" alt="Users Image" style="width:100px;">
+                                                <div class="form-group"> 
+                                                    @if( Auth::user()->image != 'default.png')
+                                                        <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" alt="Users Image" style="width:100px;" />
+                                                    @else
+                                                        <img src="{{ Storage::disk('public')->url('default/'.'default.png') }}" alt="Users Image" style="width:100px;" />
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

@@ -3,12 +3,18 @@
     <aside id="leftsidebar" class="sidebar">
         <!-- User Info -->
         <div class="user-info">
-            <div class="image">
-                <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" width="50" height="50" alt="User" />
+
+            <div class="image"> 
+                @if( Auth::user()->image != 'default.png')
+                    <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" width="50" height="50" alt="User" />
+                @else
+                    <img src="{{ Storage::disk('public')->url('default/'.'default.png') }}" width="50" height="50" alt="User" />
+                @endif
             </div>
+
             <div class="info-container">
-            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
-                <div class="email">{{ Auth::user()->email }}</div>
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} | <b>{{ Auth::user()->role->name }}</b></div>
+                <div class="email">{{ Auth::user()->email }}</div> 
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="true">keyboard_arrow_down</i>
@@ -19,7 +25,7 @@
                             @elseif(Auth::user()->role_id == 2)
                                 <a href="{{ route('author.settings')}}"><i class="material-icons">person</i>Profile</a>
                             @else
-                                <a href="#"><i class="material-icons">person</i>Profile</a>
+                                <a href="{{ route('user.settings')}}"><i class="material-icons">person</i>Profile</a>
                             @endif
                         </li> 
                         <li role="separator" class="divider"></li> 
@@ -31,9 +37,7 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                            </li> 
-                        
-                        {{-- <li><a href="{{ route('logout') }}"><i class="material-icons">input</i>Log Out</a></li> --}}
+                            </li>  
                     </ul>
                 </div>
             </div>
@@ -55,14 +59,14 @@
 
                     <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
                         <a href="{{ route('admin.tag.index')}}">
-                            <i class="material-icons">label</i>
+                            <i class="material-icons">note</i>
                             <span>All Tags</span>
                         </a> 
                     </li> 
                     
                     <li class="{{ Request::is('admin/category*') ? 'active' : '' }}">
                         <a href="{{ route('admin.category.index')}}">
-                            <i class=" material-icons">shop_two</i>
+                            <i class=" material-icons">apps</i>
                             <span>All Category</span>
                         </a>
                     </li>
@@ -74,7 +78,7 @@
                     </li>
                     <li class="{{ Request::is('admin/pending/post') ? 'active' : '' }}">
                         <a href="{{ route('admin.post.pending')}}">
-                            <i class=" material-icons">grid_off</i>
+                            <i class=" material-icons">library_books</i>
                             <span>Pending Post</span>
                         </a>
                     </li>
@@ -100,7 +104,7 @@
                     </li> 
                     <li class="{{ Request::is('admin/authors*') ? 'active' : '' }}">
                         <a href="{{ route('admin.author.index')}}">
-                            <i class="material-icons">message</i>
+                            <i class="material-icons">contacts</i>
                             <span>Author's Post</span>
                         </a>
                     </li>
@@ -200,10 +204,11 @@
             </ul>
         </div>
         <!-- #Menu -->
+        
         <!-- Footer -->
         <div class="legal">
             <div class="copyright">
-                &copy; 2019 <a href="javascript:void(0);">Bona Blog</a>.
+                &copy; {{ now()->year }} <a href="javascript:void(0);">Bona Blog</a>.
             </div>
         </div>
         <!-- #Footer -->

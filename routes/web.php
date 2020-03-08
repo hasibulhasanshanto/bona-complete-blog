@@ -71,6 +71,7 @@ Route::group(['as'=>'author.','prefix'=>'author','namespace'=>'Author','middlewa
     
 });
 
+//Footer Composer
 View::composer('frontend.includes.footer', function ($view) {
     $categories = App\Category:: all();
     $view->with('categories', $categories);

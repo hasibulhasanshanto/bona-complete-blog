@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Tag;
+use App\Post;
+use App\User;
+use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -13,8 +18,33 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('backend.admin.dashboard');
+    { 
+        $posts = Post::all();
+        $popular_posts = Post::withCount('comments')
+            ->withCount('favorite_to_user')
+            ->orderBy('view_count', 'desc')
+            ->orderBy('comments_count', 'desc')
+            ->orderBy('favorite_to_user_count', 'desc')
+            ->take(5)->get();
+
+        $pending_posts = $posts->where('is_approved', false)->count();
+        $all_views  = Post::sum('view_count');
+        $author_count = User::where('role_id', 2)->count();
+        $new_authors_reg = User::where('role_id', 2)
+            ->whereDate('created_at', Carbon::today())->count();
+
+        $active_authors = User::where('role_id', 2)
+            ->withCount('posts')
+            ->withCount('comments')
+            ->withCount('favorite_posts')
+            ->orderBy('posts_count', 'desc')
+            ->orderBy('comments_count', 'desc')
+            ->orderBy('favorite_posts_count', 'desc')->take(10)->get();
+
+        $category_count = Category::all()->count();
+        $tag_count = Tag::all()->count();
+
+        return view('backend.admin.dashboard', compact('posts', 'popular_posts', 'pending_posts', 'all_views', 'author_count', 'new_authors_reg', 'active_authors', 'category_count', 'tag_count'));
     }
 
     /**

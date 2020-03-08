@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Author;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,7 +15,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.author.dashboard');
+        $user = Auth::user();
+        $posts = $user->posts();
+        $popular_posts = $user->posts()
+            ->withCount('comments')
+            ->withCount('favorite_to_user')
+            ->orderBy('view_count', 'desc')
+            ->orderBy('comments_count')
+            ->orderBy('favorite_to_user_count')
+            ->take(5)->get();
+        $pending_posts = $posts->where('status', false)->count();
+        $all_views  = Auth::user()->posts->sum('view_count');
+
+        return view('backend.author.dashboard', compact('posts', 'popular_posts', 'pending_posts', 'all_views'));
     }
 
     /**
