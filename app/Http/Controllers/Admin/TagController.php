@@ -46,7 +46,7 @@ class TagController extends Controller
         ]);
         
         $tag = new Tag();
-        $tag->name = strtoupper($request->name);
+        $tag->name = strtolower($request->name);
         $tag->slug = Str::slug($request->name); 
         $tag->save(); 
         Toastr::success('Tag Created Sucessfully!', 'Success');

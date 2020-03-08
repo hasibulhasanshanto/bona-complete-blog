@@ -11,7 +11,7 @@
         height: 400px;
         widows: 100%;
         background-size: cover;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ Storage::disk('public')->url('posts/cover1.jpeg') }});
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({{ Storage::disk('public')->url('cover/cover1.jpeg') }});
         
     }
 
@@ -24,7 +24,7 @@
     <div class="overlay"></div>
     <div class="header-bg">
         <div class="slider display-table center-text">
-            <h1 class="title display-table-cell">{{ $tag->name }}</h1>
+            <h1 class="title display-table-cell">{{ ucwords($tag->name) }}</h1>
         </div>
     </div>
     

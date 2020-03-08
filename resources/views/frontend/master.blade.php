@@ -6,7 +6,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'My Blog') }}</title>
+    <title>{{ config('app.name', 'Bona Blog') }}</title>
     <!-- Scripts -->
     <!-- Font -->        
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">

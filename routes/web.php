@@ -71,6 +71,12 @@ Route::group(['as'=>'author.','prefix'=>'author','namespace'=>'Author','middlewa
     
 });
 
+//Navbar Composer
+View::composer('backend.includes.nav', function ($view) {
+    $pending_posts = App\Post:: where('is_approved', false)->count();
+    $view->with('pending_posts', $pending_posts);
+});
+
 //Footer Composer
 View::composer('frontend.includes.footer', function ($view) {
     $categories = App\Category:: all();

@@ -11,7 +11,7 @@
         height: 400px;
         widows: 100%;
         background-size: cover;
-        background-image: url({{ Storage::disk('public')->url('posts/cover2.jpg') }});
+        background-image: url({{ Storage::disk('public')->url('cover/cover2.jpg') }});
         
     }
 

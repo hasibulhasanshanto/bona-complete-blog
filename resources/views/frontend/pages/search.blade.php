@@ -12,7 +12,7 @@
         widows: 100%;
         background-size: cover;
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-        url({{ Storage::disk('public')->url('posts/cover1.jpeg') }});
+        url({{ Storage::disk('public')->url('cover/cover1.jpeg') }});
         
     }
 

@@ -278,11 +278,11 @@ class PostController extends Controller
 
         if( $post){
             Toastr::success('Post Approved Sucessfully!', 'Success');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('admin.post.pending');
 
         }else{
             Toastr::error('Something Went Wrong :(', 'Error');
-            return redirect()->route('admin.post.index');
+            return redirect()->route('admin.post.pending');
         } 
 
     }
